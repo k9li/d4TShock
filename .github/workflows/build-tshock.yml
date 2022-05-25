@@ -21,7 +21,7 @@ jobs:
       - name: Set Var
         id  : set_var
         run : |
-              echo ::set-output name=download_url::`curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | grep browser_download_url | grep zip | cut -d '"' -f 4`
+              echo ::set-output name=download_url::`curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | grep browser_download_url | grep zip | cut -d '"' -f 4` /
               echo ::set-output name=tshock_version::`curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | grep browser_download_url | grep zip | cut -d '"' -f 4 | sed -nr 's/^[^0-9]*(([0-9]+\.)*[0-9]+).*/\1/p'`
       
       - name: Checkout
@@ -29,7 +29,7 @@ jobs:
         
       - name: Set Version
         run : |
-              sed -i "?^ADD http?cADD ${{ steps.set_var.outputs.download_url }}\s\/?" TShock/Dockerfile
+              sed -i "?^ADD http?cADD ${{ steps.set_var.outputs.download_url }}?" TShock/Dockerfile
               cat TShock/Dockerfile
               
       - name: Set up QEMU
