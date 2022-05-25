@@ -7,7 +7,7 @@ RUN apk add --update-cache \
 COPY bootstrap.sh /tshock/bootstrap.sh
 
 # Download and unpack TShock
-ADD DOWNLOAD_URL /
+ADD https://github.com/Pryaxis/TShock/releases/download/v4.5.17/TShock4.5.17_Terraria_1.4.3.6.zip /
 RUN unzip *.zip -d /tshock && \    
     rm *.zip && \
     chmod +x /tshock/TerrariaServer.exe && \
