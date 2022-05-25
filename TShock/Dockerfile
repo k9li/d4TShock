@@ -14,7 +14,7 @@ RUN unzip *.zip -d /tshock && \
     # add executable perm to bootstrap
     chmod +x /tshock/bootstrap.sh
 
-FROM mono:6.12.0.122-slim
+FROM mono:slim
 
 LABEL maintainer="K"
 
