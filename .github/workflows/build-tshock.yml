@@ -18,15 +18,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set Var
-        id  : set_var
-        run : |
-              echo ::set-output name=download_url::`curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | grep browser_download_url | grep zip | cut -d '"' -f 4` /
-              echo ::set-output name=tshock_version::`curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | grep browser_download_url | grep zip | cut -d '"' -f 4 | sed -nr 's/^[^0-9]*(([0-9]+\.)*[0-9]+).*/\1/p'`
-      
       - name: Checkout
         uses: actions/checkout@v2
         
+      - name: Set Var
+        id  : set_var
+        run : |
+              echo ::set-output name=old_download_url::`cat TShock/Dockerfile | grep 'ADD http'`
+              echo ::set-output name=download_url::`curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | grep browser_download_url | grep zip | cut -d '"' -f 4` /
+              echo ::set-output name=tshock_version::`curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | grep browser_download_url | grep zip | cut -d '"' -f 4 | sed -nr 's/^[^0-9]*(([0-9]+\.)*[0-9]+).*/\1/p'`
+      
       - name: Set Version
         run : |
               sed -i "s?^ADD http.*?ADD ${{ steps.set_var.outputs.download_url }}?" TShock/Dockerfile
