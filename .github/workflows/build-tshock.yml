@@ -29,7 +29,7 @@ jobs:
         
       - name: Set Version
         run : |
-              sed -i "s?^ADD http*?ADD ${{ steps.set_var.outputs.download_url }}?" TShock/Dockerfile
+              sed -i "s?^ADD http?c ADD ${{ steps.set_var.outputs.download_url }}?" TShock/Dockerfile
               cat TShock/Dockerfile
               
       - name: Set up QEMU
